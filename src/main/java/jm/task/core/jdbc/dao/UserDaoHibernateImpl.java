@@ -12,7 +12,7 @@ import java.util.List;
 public class UserDaoHibernateImpl implements UserDao {
 
     private final SessionFactory sessionFactory = Util.getSessionFactory();
-    private Transaction transaction = null;
+    private Transaction transaction;
     private String sqlQuery;
 
     public UserDaoHibernateImpl() {
@@ -77,7 +77,7 @@ public class UserDaoHibernateImpl implements UserDao {
         List<User> userList = new ArrayList<>();
 
         try(Session session = sessionFactory.openSession()) {
-            userList = session.createQuery("FROM User").getResultList();
+            userList = session.createQuery("FROM User", User.class).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
